@@ -28,12 +28,13 @@ jobs:
           cd motionx
           flutter pub get
 
-      - name: Rakit APK Debug (Cepat & Anti Gagal)
+      - name: Rakit APK Debug
         run: |
           cd motionx
           flutter build apk --debug
 
-      - name: Upload APK ke Link Bashupload
-        run: |
-          cd motionx
-          curl https://bashupload.com/ -T build/app/outputs/flutter-apk/app-debug.apk
+      - name: Tangkap APK ke Artifacts (Langsung Download dari GitHub)
+        uses: actions/upload-artifact@v4
+        with:
+          name: MotionX-APK
+          path: motionx/build/app/outputs/flutter-apk/app-debug.apk
