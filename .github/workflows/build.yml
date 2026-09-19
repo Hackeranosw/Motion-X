@@ -1,0 +1,40 @@
+name: Build APK Motion X
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tarik Kode dari Repo
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install Dependensi Video
+        run: |
+          cd motionx
+          flutter pub get
+
+      - name: Rakit File APK
+        run: |
+          cd motionx
+          flutter build apk --release --target-platform android-arm,android-arm64
+
+      - name: Upload APK ke Link Bashupload
+        run: |
+          cd motionx
+          curl https://bashupload.com/ -T build/app/outputs/flutter-apk/app-release.apk
+          echo "Buka link bashupload di atas untuk download APK"
