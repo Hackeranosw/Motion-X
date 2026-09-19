@@ -1,4 +1,4 @@
-name: Build APK Motion X (Debug)
+name: Build APK Motion X
 on:
   push:
     branches:
@@ -9,32 +9,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Tarik Kode
+      - name: Checkout Kode
         uses: actions/checkout@v3
 
-      - name: Set up Java
+      - name: Setup Java (Wajib buat Android SDK)
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Set up Flutter
+      - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
 
-      - name: Install Dependensi
+      - name: Install Dependensi & Rakit APK Debug
         run: |
           cd motionx
           flutter pub get
-
-      - name: Rakit APK Debug
-        run: |
-          cd motionx
           flutter build apk --debug
 
-      - name: Tangkap APK ke Artifacts (Langsung Download dari GitHub)
+      - name: Upload APK ke Artifacts (Biar lu bisa download dari GitHub)
         uses: actions/upload-artifact@v4
         with:
-          name: MotionX-APK
+          name: app-debug.apk
           path: motionx/build/app/outputs/flutter-apk/app-debug.apk
