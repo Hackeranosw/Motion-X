@@ -1,4 +1,4 @@
-name: Build APK Motion X
+name: Build APK Motion X (Debug)
 on:
   push:
     branches:
@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Tarik Kode dari Repo
+      - name: Tarik Kode
         uses: actions/checkout@v3
 
       - name: Set up Java
@@ -23,18 +23,17 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Install Dependensi Video
+      - name: Install Dependensi
         run: |
           cd motionx
           flutter pub get
 
-      - name: Rakit File APK
+      - name: Rakit APK Debug (Cepat & Anti Gagal)
         run: |
           cd motionx
-          flutter build apk --release --target-platform android-arm,android-arm64
+          flutter build apk --debug
 
       - name: Upload APK ke Link Bashupload
         run: |
           cd motionx
-          curl https://bashupload.com/ -T build/app/outputs/flutter-apk/app-release.apk
-          echo "Buka link bashupload di atas untuk download APK"
+          curl https://bashupload.com/ -T build/app/outputs/flutter-apk/app-debug.apk
